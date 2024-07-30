@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<documentation>
+    <api>
+        <name>Авторизация через соц. сети</name>
+        <description>Авторизация пользователя в системе через социальные сети</description>
+        <url>{{baseUrl}}</url>
+
+        <endpoint>
+            <path>/auth/social/google</path>
+            <method>GET</method>
+            <description>Авторизация / Регистрация через Google</description>
+            <header>
+                <name>Content-Type</name>
+                <value>application/json</value>
+            </header>
+            <parameter>
+                <name>code</name>
+                <type>s</type>
+                <required>true</required>
+                <description>Код сгенерированный Google</description>
+                <example>GOOGLE_CODE</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Регистрация прошла успешно</description>
+                <example>
+                    <![CDATA[{
+                            "time": "2024-07-30 19:01:59",
+                            "type": 1,
+                            "action": "link",
+                            "message_id": "api_id_auth_social_google_link",
+                            "message": "Generate link for auth",
+                            "return": {
+                                "link": "GOOGLE_LINK"
+                            }
+                        }]]>
+                </example>
+                <return>
+                    <name>link</name>
+                    <type>s</type>
+                    <description>Ссылка для автоизации / регистрации</description>
+                </return>
+            </response>
+            <response>
+                <status>200</status>
+                <description>Регистрация прошла успешно</description>
+                <example>
+                    <![CDATA[{
+                            "time": "2024-07-30 19:01:59",
+                            "type": 1,
+                            "action": "link",
+                            "message_id": "api_id_auth_social_google_link",
+                            "message": "Generate link for auth",
+                            "return": {
+                                "link": "GOOGLE_LINK"
+                            }
+                        }]]>
+                </example>
+                <return>
+                    <name>link</name>
+                    <type>s</type>
+                    <description>Ссылка для автоизации / регистрации</description>
+                </return>
+            </response>
+        </endpoint>
+    </api>
+</documentation>

@@ -1,0 +1,387 @@
+:root {
+    --color-body: #fff;
+    --color-body-gray: #f6f6f6;
+    --color-body-black: #3b3b3b;
+    --color-text: #000;
+    --color-text-inverse: #fff;
+    --color-text-gray: #8d8d8d;
+    --color-text-gray-dark: #424242;
+
+    --color-border: #e7e7e7;
+
+    --padding-00: 4px;
+    --padding-01: 6px;
+    --padding-02: 12px;
+    --padding-03: 16px;
+    --padding-04: 24px;
+
+    --radius-01: 4px;
+    --radius-02: 6px;
+    --radius-03: 12px;
+    --radius-04: 18px;
+    --radius-05: 24px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+
+    font-family: system-ui, "Droid Sans", SansSerif, sans-serif, serif;
+
+    color: var(--color-text);
+}
+*.code {
+    font-family: monospace;
+}
+
+html, body {
+    width: 100%;
+    height: fit-content;
+
+    background-color: var(--color-body);
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+header {
+    width: calc(100% - calc(var(--padding-04) * 2));
+    height: 64px;
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    user-select: none;
+
+    background-color: var(--color-body);
+
+    border-bottom: 1px solid var(--color-border);
+
+    padding: 0 var(--padding-04);
+}
+header > h1 {
+    font-weight: 600;
+    font-size: 18px;
+
+    line-height: 95%;
+
+    letter-spacing: -.02em;
+}
+
+main {
+    width: 100%;
+    height: fit-content;
+
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+}
+main > section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    width: 100%;
+    height: fit-content;
+}
+main > section > div.documentation {
+    width: 100%;
+    height: fit-content;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--padding-04);
+
+    padding-bottom: var(--padding-04);
+}
+main > section > div.documentation *:empty {
+    display: none;
+}
+main > section > div.documentation:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+}
+main > section > div.documentation > article.header {
+    width: calc(100% - calc(var(--padding-04) * 2));
+    height: fit-content;
+
+    padding: var(--padding-03) var(--padding-04) 0;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--padding-00);
+}
+main > section > div.documentation > article.header > h3 {
+    font-weight: 600;
+    font-size: 18px;
+
+    line-height: 95%;
+
+    letter-spacing: -.02em;
+}
+main > section > div.documentation > article.header > span.description {
+    font-weight: 400;
+    font-size: 14px;
+
+    max-width: 450px;
+
+    line-height: 95%;
+
+    color: var(--color-text-gray);
+
+    letter-spacing: -.02em;
+}
+main > section > div.documentation > div.endpoints {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--padding-01);
+
+    padding: 0 var(--padding-04);
+
+    width: calc(100% - calc(var(--padding-04) * 2));
+}
+main > section > div.documentation > div.endpoints > div.endpoint {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    background-color: var(--color-body-gray);
+
+    width: 100%;
+    height: fit-content;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-02);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > article.header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding: var(--padding-02) var(--padding-03);
+
+    width: calc(100% - calc(var(--padding-03) * 2) - 2px);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > article.header > h5 {
+    font-weight: 700;
+    font-size: 14px;
+
+    line-height: 95%;
+
+    letter-spacing: -.02em;
+}
+main > section > div.documentation > div.endpoints > div.endpoint > article.header > span.method {
+    width: fit-content;
+    height: fit-content;
+
+    user-select: none;
+
+    padding: var(--padding-00) var(--padding-01);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-01);
+
+    font-weight: 600;
+    font-size: 14px;
+
+    color: var(--color-text-gray-dark);
+
+    text-transform: uppercase;
+
+    background-color: var(--color-body);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > article.header > span.description {
+    font-weight: 400;
+    font-size: 14px;
+
+    position: absolute;
+    right: var(--padding-03);
+
+    line-height: 95%;
+
+    color: var(--color-text-gray);
+
+    letter-spacing: -.02em;
+}
+main > section > div.documentation > div.endpoints > div.endpoint > section {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    gap: var(--padding-03);
+
+    padding: var(--padding-03);
+
+    width: calc(100% - calc(var(--padding-03) * 2) - 2px);
+
+    border-top: 1px solid var(--color-border);
+
+    background-image: linear-gradient(0deg var(--color-border) var(--color-body));
+}
+main > section > div.documentation > div.endpoints > div.endpoint > section > article {
+    width: 100%;
+    height: fit-content;
+
+    position: relative;
+    
+    background-color: var(--color-body-black);
+
+    border-radius: var(--radius-01);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > section > article * {
+    color: var(--color-text-inverse);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > section > article > h4 {
+    padding: var(--padding-02);
+
+    width: calc(100% - calc(var(--padding-02) * 2));
+
+    font-weight: 500;
+    font-size: 13px;
+
+    border-bottom: 1px solid var(--color-text-gray-dark);
+
+    line-height: 95%;
+
+    letter-spacing: -.02em;
+}
+
+div.headers {
+    padding: var(--padding-02) var(--padding-03);
+}
+
+div.parameters {
+    padding: var(--padding-02) var(--padding-03);
+
+    width: calc(100% - calc(var(--padding-03) * 2));
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--padding-01);
+}
+div.parameters.returns {
+    border-top: 1px solid var(--color-text-gray);
+}
+div.parameters > div {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--padding-01);
+}
+div.parameters > div > h5 {
+    font-weight: 500;
+    font-size: 12px;
+
+    border: 1px solid var(--color-text-gray);
+    border-radius: var(--radius-01);
+
+    padding: var(--padding-00) var(--padding-01);
+}
+
+div.responses {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--padding-02);
+
+    padding: var(--padding-02);
+
+    width: calc(100% - calc(var(--padding-02) * 2));
+    height: fit-content;
+}
+div.responses > div.container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+
+    width: calc(100% - 2px);
+    height: fit-content;
+
+    border: 1px solid var(--color-text-gray);
+    border-radius: var(--radius-01);
+}
+div.responses > div.container > div.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--padding-00);
+
+    border-bottom: 1px solid var(--color-text-gray);
+
+    width: calc(100% - calc(var(--padding-02) * 2));
+
+    padding: var(--padding-02);
+}
+div.responses > div.container > div.header > span.status {
+    background-color: transparent;
+    border: 1px solid var(--color-text-gray);
+    border-radius: var(--radius-01);
+
+    padding: var(--padding-01) var(--padding-02);
+
+    font-weight: 500;
+    font-size: 12px;
+
+    user-select: none;
+
+    letter-spacing: .04em;
+}
+div.responses > div.container > div.header > span.status.status-red {
+    color: crimson;
+    background-color: rgba(220, 20, 60, 0.2);
+    border-color: rgba(220, 20, 60, 0.4);
+}
+div.responses > div.container > div.header > span.status.status-yellow {
+    color: orange;
+    background-color: rgba(255, 165, 0, 0.2);
+    border-color: rgba(255, 165, 0, 0.4);
+}
+div.responses > div.container > div.header > span.status.status-green {
+    color: greenyellow;
+    background-color: rgba(173, 255, 47, 0.2);
+    border-color: rgba(173, 255, 47, 0.4);
+}
+div.responses > div.container > div.header > span.description {
+    font-weight: 400;
+    font-size: 12px;
+
+    line-height: 95%;
+
+    letter-spacing: .02em;
+}
+div.responses > div.container > pre {
+    width: calc(100% - calc(var(--padding-02) * 2));
+
+    font-size: 12px;
+
+    background-color: transparent;
+
+    margin: 0;
+
+    padding: var(--padding-02);
+}
+div.responses > div.container > pre > code {
+    margin: 0;
+}
+div.responses > div.container > pre > code > span {
+    font-family: monospace;
+}
