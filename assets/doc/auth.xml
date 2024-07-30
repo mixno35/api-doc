@@ -26,9 +26,9 @@
                 <example>
                     <![CDATA[{
                             "time": "2024-05-06 03:00:00",
-                            "type": 1,
-                            "message_id": "api_id_message",
-                            "message": "",
+                            "type": "success",
+                            "message_id": "api_id_auth_social_success",
+                            "message": "Authorization success",
                             "return": {
                                 "token": "TOKEN"
                             }
@@ -42,22 +42,22 @@
             </response>
             <response>
                 <status>400</status>
-                <description>Регистрация закончилась неудачей</description>
+                <description>Код авторизации Google пуст</description>
                 <example>
                     <![CDATA[{
-                        "time": "2024-05-06 03:00:00",
-                        "type": 0,
-                        "message_id": "api_id_message",
-                        "message": "",
+                        "time": "2024-07-31 01:24:55",
+                        "status": "error",
+                        "message_id": "api_id_auth_social_google_code_empty",
+                        "message": "Code empty",
                         "return": {
-                            "code": 0
+                            "link": "GOOGLE_LINK"
                         }
                     }]]>
                 </example>
                 <return>
-                    <name>code</name>
-                    <type>i</type>
-                    <description>Код ошибки</description>
+                    <name>link</name>
+                    <type>s</type>
+                    <description>Ссылка для авторизации / регистрации</description>
                 </return>
             </response>
         </endpoint>
