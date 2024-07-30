@@ -62,7 +62,7 @@
             </response>
             <response>
                 <status>400</status>
-                <description>Код авторизации Google пуст</description>
+                <description>Код авторизации Google уже использован</description>
                 <example>
                     <![CDATA[{
                         "time": "2024-05-06 03:00:00",
