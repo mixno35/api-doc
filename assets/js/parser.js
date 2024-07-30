@@ -25,15 +25,13 @@ function parseApiType(type) {
 }
 
 function parseClassApiCode(code) {
-    if (code >= 200) {
-        return "status-green";
+    if (code >= 400) {
+        return "status-red";
     } if (code >= 300) {
         return "status-yellow";
-    } if (code >= 400) {
-        return "status-red";
-    }
-
-    return "";
+    } if (code >= 200) {
+        return "status-green";
+    } return "";
 }
 
 function parseFormatJSON(jsonString) {

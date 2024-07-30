@@ -25,41 +25,39 @@
                 <description>Регистрация прошла успешно</description>
                 <example>
                     <![CDATA[{
-                            "time": "2024-07-30 19:01:59",
+                            "time": "2024-05-06 03:00:00",
                             "type": 1,
-                            "action": "link",
-                            "message_id": "api_id_auth_social_google_link",
-                            "message": "Generate link for auth",
+                            "message_id": "api_id_message",
+                            "message": "",
                             "return": {
-                                "link": "GOOGLE_LINK"
+                                "token": "TOKEN"
                             }
                         }]]>
                 </example>
                 <return>
-                    <name>link</name>
+                    <name>token</name>
                     <type>s</type>
-                    <description>Ссылка для автоизации / регистрации</description>
+                    <description>Токен аутентификации пользователя</description>
                 </return>
             </response>
             <response>
-                <status>200</status>
-                <description>Регистрация прошла успешно</description>
+                <status>400</status>
+                <description>Регистрация закончилась неудачей</description>
                 <example>
                     <![CDATA[{
-                            "time": "2024-07-30 19:01:59",
-                            "type": 1,
-                            "action": "link",
-                            "message_id": "api_id_auth_social_google_link",
-                            "message": "Generate link for auth",
-                            "return": {
-                                "link": "GOOGLE_LINK"
-                            }
-                        }]]>
+                        "time": "2024-05-06 03:00:00",
+                        "type": 0,
+                        "message_id": "api_id_message",
+                        "message": "",
+                        "return": {
+                            "code": 0
+                        }
+                    }]]>
                 </example>
                 <return>
-                    <name>link</name>
-                    <type>s</type>
-                    <description>Ссылка для автоизации / регистрации</description>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки</description>
                 </return>
             </response>
         </endpoint>
