@@ -45,7 +45,7 @@
                 <description>Код авторизации Google пуст</description>
                 <example>
                     <![CDATA[{
-                        "time": "2024-07-31 01:24:55",
+                        "time": "2024-05-06 03:00:00",
                         "status": "error",
                         "message_id": "api_id_auth_social_google_code_empty",
                         "message": "Code empty",
@@ -58,6 +58,26 @@
                     <name>link</name>
                     <type>s</type>
                     <description>Ссылка для авторизации / регистрации</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Код авторизации Google пуст</description>
+                <example>
+                    <![CDATA[{
+                        "time": "2024-05-06 03:00:00",
+                        "status": "error",
+                        "message_id": "api_id_auth_social_google_service_error",
+                        "message": "{}",
+                        "return": {
+                            "code": 401
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки</description>
                 </return>
             </response>
         </endpoint>
