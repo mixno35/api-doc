@@ -9,6 +9,10 @@
             <path>/auth/social/google</path>
             <method>GET</method>
             <description>Авторизация / Регистрация через Google</description>
+            <hint>
+                Пример получения параметра "code" на стороне клиента: <![CDATA[<a target="_blank" href="https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru">https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru</a>]]>.
+                После получения "code" можно отправить запрос на авторизацию / регистрацию
+            </hint>
             <header>
                 <name>Content-Type</name>
                 <value>application/json</value>
@@ -22,7 +26,7 @@
             </parameter>
             <response>
                 <status>200</status>
-                <description>Регистрация прошла успешно</description>
+                <description>Регистрация / Авторизация прошла успешно</description>
                 <example>
                     <![CDATA[{
                         "status": "success",
@@ -46,21 +50,13 @@
                     <![CDATA[{
                         "status": "error",
                         "task": "auth_social_google_code_empty",
-                        "message": "Code empty",
-                        "data": {
-                            "link": "GOOGLE_LINK"
-                        }
+                        "message": "Code empty"
                     }]]>
                 </example>
-                <return>
-                    <name>link</name>
-                    <type>s</type>
-                    <description>Ссылка для авторизации / регистрации</description>
-                </return>
             </response>
             <response>
                 <status>400</status>
-                <description>Код авторизации Google уже использован</description>
+                <description>Ошибка на стороне Google / Код уже использован</description>
                 <example>
                     <![CDATA[{
                         "status": "error",
@@ -76,6 +72,13 @@
                     <type>i</type>
                     <description>Код ошибки</description>
                 </return>
+            </response>
+            <response>
+                <status>500</status>
+                <description>Некорректно заполнены Заголовки</description>
+                <example>
+
+                </example>
             </response>
         </endpoint>
     </api>

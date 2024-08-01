@@ -93,8 +93,9 @@ function parseApiDocumentation(xmlString) {
 
             endpoints.forEach(endpoint => {
                 const infoEndpoint = {
-                    path: parseApiValue(tr(String(endpoint.querySelector("path").textContent))),
-                    description: parseApiValue(tr(String(endpoint.querySelector("description").textContent))),
+                    path: parseApiValue(tr(String(endpoint.querySelector("path").textContent ?? ""))),
+                    description: parseApiValue(tr(String(endpoint.querySelector("description").textContent ?? ""))),
+                    hint: parseApiValue(tr(String(endpoint.querySelector("hint").textContent ?? ""))),
                 };
 
                 const containerEndpoint = document.createElement("div");
@@ -114,6 +115,10 @@ function parseApiDocumentation(xmlString) {
                 parseMethods();
                 headerEndpoint.appendChild(descriptionEndpoint);
 
+                const hintEndpont = document.createElement("span");
+                hintEndpont.classList.add("hint");
+                hintEndpont.innerHTML = infoEndpoint.hint;
+
                 const containerEndpointContent = document.createElement("section");
 
                 const headers = endpoint.querySelectorAll("header");
@@ -121,8 +126,8 @@ function parseApiDocumentation(xmlString) {
                     let text = "";
                     headers.forEach(header => {
                         const infoHeader = {
-                            name: parseApiValue(tr(String(header.querySelector("name").textContent))),
-                            value: parseApiValue(tr(String(header.querySelector("value").textContent)))
+                            name: parseApiValue(tr(String(header.querySelector("name").textContent ?? ""))),
+                            value: parseApiValue(tr(String(header.querySelector("value").textContent ?? "")))
                         };
 
                         text += `${infoHeader.name}: ${infoHeader.value}\n`;
@@ -142,11 +147,11 @@ function parseApiDocumentation(xmlString) {
 
                     parameters.forEach(parameter => {
                         const infoParameter = {
-                            name: parseApiValue(tr(String(parameter.querySelector("name").textContent))),
-                            type: parseApiType(String(parameter.querySelector("type").textContent)).toLowerCase(),
-                            description: parseApiValue(tr(String(parameter.querySelector("description").textContent))),
-                            example: parseApiValue(tr(String(parameter.querySelector("example").textContent))),
-                            required: Boolean(String(parameter.querySelector("required").textContent) === "true")
+                            name: parseApiValue(tr(String(parameter.querySelector("name").textContent ?? ""))),
+                            type: parseApiType(String(parameter.querySelector("type").textContent ?? "")).toLowerCase(),
+                            description: parseApiValue(tr(String(parameter.querySelector("description").textContent ?? ""))),
+                            example: parseApiValue(tr(String(parameter.querySelector("example").textContent ?? ""))),
+                            required: Boolean(String(parameter.querySelector("required").textContent ?? "") === "true")
                         };
 
                         const containerParameter = document.createElement("div");
@@ -187,9 +192,9 @@ function parseApiDocumentation(xmlString) {
 
                     responses.forEach(response => {
                         const infoResponse = {
-                            status: Number(response.querySelector("status").textContent),
-                            description: parseApiValue(tr(String(response.querySelector("description").textContent))),
-                            example: String(response.querySelector("example").textContent)
+                            status: Number(response.querySelector("status").textContent ?? 0),
+                            description: parseApiValue(tr(String(response.querySelector("description").textContent ?? ""))),
+                            example: String(response.querySelector("example").textContent ?? "")
                         };
 
                         const container = document.createElement("div");
@@ -219,7 +224,7 @@ function parseApiDocumentation(xmlString) {
                         header.appendChild(description);
 
                         container.appendChild(header);
-                        container.appendChild(pre);
+                        if (infoResponse.example.trim() !== "") container.appendChild(pre);
 
                         const returns = response.querySelectorAll("return");
                         if (returns.length > 0) {
@@ -228,9 +233,9 @@ function parseApiDocumentation(xmlString) {
 
                             returns.forEach(r => {
                                 const infoR = {
-                                    name: parseApiValue(tr(String(r.querySelector("name").textContent))),
-                                    type: parseApiType(String(r.querySelector("type").textContent)),
-                                    description: parseApiValue(tr(String(r.querySelector("description").textContent)))
+                                    name: parseApiValue(tr(String(r.querySelector("name").textContent ?? ""))),
+                                    type: parseApiType(String(r.querySelector("type").textContent ?? "")),
+                                    description: parseApiValue(tr(String(r.querySelector("description").textContent ?? "")))
                                 };
 
                                 const containerReturn = document.createElement("div");
@@ -266,6 +271,7 @@ function parseApiDocumentation(xmlString) {
                 }
 
                 containerEndpoint.appendChild(headerEndpoint);
+                containerEndpoint.appendChild(hintEndpont);
                 containerEndpoint.appendChild(containerEndpointContent);
 
                 containerEndpoints.appendChild(containerEndpoint);

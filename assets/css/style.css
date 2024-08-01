@@ -166,6 +166,16 @@ main > section > div.documentation > div.endpoints > div.endpoint {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-02);
 }
+main > section > div.documentation > div.endpoints > div.endpoint > span.hint {
+    padding: var(--padding-02) var(--padding-03) 0;
+
+    font-weight: 500;
+    font-size: 13px;
+
+    letter-spacing: -.02em;
+
+    line-height: 95%;
+}
 main > section > div.documentation > div.endpoints > div.endpoint > article.header {
     position: relative;
     display: flex;
@@ -173,6 +183,8 @@ main > section > div.documentation > div.endpoints > div.endpoint > article.head
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
+
+    border-bottom: 1px solid var(--color-border);
 
     padding: var(--padding-02) var(--padding-03);
 
@@ -230,8 +242,6 @@ main > section > div.documentation > div.endpoints > div.endpoint > section {
 
     width: calc(100% - calc(var(--padding-03) * 2) - 2px);
 
-    border-top: 1px solid var(--color-border);
-
     background-image: linear-gradient(0deg var(--color-border) var(--color-body));
 }
 main > section > div.documentation > div.endpoints > div.endpoint > section > article {
@@ -239,10 +249,15 @@ main > section > div.documentation > div.endpoints > div.endpoint > section > ar
     height: fit-content;
 
     position: relative;
-    
+
+    overflow-x: auto;
+
     background-color: var(--color-body-black);
 
     border-radius: var(--radius-01);
+}
+main > section > div.documentation > div.endpoints > div.endpoint > section > article span {
+    white-space: nowrap;
 }
 main > section > div.documentation > div.endpoints > div.endpoint > section > article * {
     color: var(--color-text-inverse);
@@ -260,6 +275,10 @@ main > section > div.documentation > div.endpoints > div.endpoint > section > ar
     line-height: 95%;
 
     letter-spacing: -.02em;
+
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
 div.headers {
@@ -325,11 +344,12 @@ div.responses > div.container > div.header {
     align-items: center;
     gap: var(--padding-00);
 
-    border-bottom: 1px solid var(--color-text-gray);
-
     width: calc(100% - calc(var(--padding-02) * 2));
 
     padding: var(--padding-02);
+}
+div.responses > div.container > div.header:not(:last-child) {
+    border-bottom: 1px solid var(--color-text-gray);
 }
 div.responses > div.container > div.header > span.status {
     background-color: transparent;
