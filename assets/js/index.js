@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetchDoc("assets/doc/auth.xml").then(resolve => parseApiDocumentation(resolve));
+    fetchDoc("assets/doc/auth.xml?v=" + timeStampInMs).then(resolve => parseApiDocumentation(resolve));
 });
