@@ -15,7 +15,7 @@
             </hint>
             <header>
                 <name>Content-Type</name>
-                <value>application/json</value>
+                <value>application/x-www-form-urlencoded</value>
             </header>
             <parameter>
                 <name>code</name>
@@ -74,11 +74,9 @@
                 </return>
             </response>
             <response>
-                <status>500</status>
+                <status>400</status>
                 <description>Некорректно заполнены Заголовки</description>
-                <example>
-
-                </example>
+                <example></example>
             </response>
         </endpoint>
     </api>
