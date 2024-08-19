@@ -7,11 +7,12 @@
 
         <endpoint>
             <path>/auth/social/google</path>
-            <method>GET</method>
+            <method>POST</method>
             <description>Авторизация / Регистрация через Google</description>
             <hint>
                 Пример получения параметра "code" на стороне клиента: <![CDATA[<a target="_blank" href="https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru">https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru</a>]]>.
-                После получения "code" можно отправить запрос на авторизацию / регистрацию
+                После получения "code" можно отправить запрос на авторизацию / регистрацию<![CDATA[<br>]]>
+                Scopes: email, profile
             </hint>
             <header>
                 <name>Content-Type</name>
