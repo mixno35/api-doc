@@ -15,14 +15,34 @@
                 Scopes: email, profile
             </hint>
             <header>
+                <required>true</required>
                 <name>Content-Type</name>
                 <value>application/x-www-form-urlencoded</value>
             </header>
+            <header>
+                <required>false</required>
+                <name>X-App-Device-Type</name>
+                <value>Android</value>
+            </header>
+            <parameter>
+                <name>type</name>
+                <type>s</type>
+                <required>true</required>
+                <description>Тип авторизации (mobile/web)</description>
+                <example>VALUE</example>
+            </parameter>
             <parameter>
                 <name>code</name>
                 <type>s</type>
+                <required>false</required>
+                <description>Код сгенерированный Google (только для Web)</description>
+                <example>GOOGLE_CODE</example>
+            </parameter>
+            <parameter>
+                <name>id_token</name>
+                <type>s</type>
                 <required>true</required>
-                <description>Код сгенерированный Google</description>
+                <description>ID Token сгенерированный Google (только для Mobile)</description>
                 <example>GOOGLE_CODE</example>
             </parameter>
             <response>
@@ -34,7 +54,7 @@
                         "task": "auth_social_google_success",
                         "message": "Authorization success",
                         "data": {
-                            "token": "TOKEN"
+                            "token": "JWT ТОКЕН"
                         }
                     }]]>
                 </example>
@@ -46,18 +66,37 @@
             </response>
             <response>
                 <status>400</status>
-                <description>Код авторизации Google пуст</description>
+                <description>Код авторизации Google пуст/некорректен</description>
                 <example>
                     <![CDATA[{
                         "status": "error",
-                        "task": "auth_social_google_code_empty",
-                        "message": "Code empty"
+                        "task": "auth_social_google_invalid_code",
+                        "message": "ЗДЕСЬ БУДЕТ СООБЩЕНИЕ"
                     }]]>
                 </example>
             </response>
             <response>
                 <status>400</status>
-                <description>Ошибка на стороне Google / Код уже использован</description>
+                <description>ID Token авторизации Google пуст/некорректен</description>
+                <example>
+                    <![CDATA[{
+                        "status": "error",
+                        "task": "auth_social_google_invalid_token",
+                        "message": "ЗДЕСЬ БУДЕТ СООБЩЕНИЕ",
+                        "data": {
+                            "code": 0
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Ошибка на стороне Google</description>
                 <example>
                     <![CDATA[{
                         "status": "error",

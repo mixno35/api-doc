@@ -115,29 +115,44 @@ function parseApiDocumentation(xmlString) {
                 parseMethods();
                 headerEndpoint.appendChild(descriptionEndpoint);
 
-                const hintEndpont = document.createElement("span");
-                hintEndpont.classList.add("hint");
-                hintEndpont.innerHTML = infoEndpoint.hint;
+                const hintEndpoint = document.createElement("span");
+                hintEndpoint.classList.add("hint");
+                hintEndpoint.innerHTML = infoEndpoint.hint;
 
                 const containerEndpointContent = document.createElement("section");
 
                 const headers = endpoint.querySelectorAll("header");
                 if (headers.length > 0) {
+                    const containerHeaders = document.createElement("div");
+                    containerHeaders.classList.add("parameters");
+
                     let text = "";
                     headers.forEach(header => {
                         const infoHeader = {
                             name: parseApiValue(tr(String(header.querySelector("name").textContent ?? ""))),
-                            value: parseApiValue(tr(String(header.querySelector("value").textContent ?? "")))
+                            value: parseApiValue(tr(String(header.querySelector("value").textContent ?? ""))),
+                            required: Boolean(String(header.querySelector("required").textContent ?? "") === "true")
                         };
 
-                        text += `${infoHeader.name}: ${infoHeader.value}\n`;
+                        const containerHeader = document.createElement("div");
+
+                        const value = document.createElement("span");
+                        value.classList.add("code");
+                        value.innerText = `${infoHeader.name}: ${infoHeader.value}`;
+
+                        const required = document.createElement("span");
+                        required.classList.add("required", "code");
+                        required.innerText = `[${tr("text_required").toLowerCase()}]`;
+
+                        containerHeader.appendChild(value);
+                        if (infoHeader.required) {
+                            containerHeader.appendChild(required);
+                        }
+
+                        containerHeaders.appendChild(containerHeader);
                     });
 
-                    const textHeader = document.createElement("div");
-                    textHeader.classList.add("headers", "code");
-                    textHeader.innerText = text.trim();
-
-                    parseEndpointContents(tr("text_headers"), textHeader);
+                    parseEndpointContents(tr("text_headers"), containerHeaders);
                 }
 
                 const parameters = endpoint.querySelectorAll("parameter");
@@ -271,7 +286,7 @@ function parseApiDocumentation(xmlString) {
                 }
 
                 containerEndpoint.appendChild(headerEndpoint);
-                containerEndpoint.appendChild(hintEndpont);
+                containerEndpoint.appendChild(hintEndpoint);
                 containerEndpoint.appendChild(containerEndpointContent);
 
                 containerEndpoints.appendChild(containerEndpoint);
