@@ -41,7 +41,7 @@
             <parameter>
                 <name>id_token</name>
                 <type>s</type>
-                <required>true</required>
+                <required>false</required>
                 <description>ID Token сгенерированный Google (только для Mobile)</description>
                 <example>GOOGLE_CODE</example>
             </parameter>
