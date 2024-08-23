@@ -120,4 +120,74 @@
             </response>
         </endpoint>
     </api>
+    <api>
+        <name>Работа с данными личного профиля</name>
+        <description>Просмотр / Изменение / Удаление</description>
+        <url>{{baseUrl}}</url>
+
+        <endpoint>
+            <path>/user/get/personal/data</path>
+            <method>GET</method>
+            <description>Просмотр сведений о личном профиле</description>
+            <hint></hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>application/x-www-form-urlencoded</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <response>
+                <status>200</status>
+                <description>Сведения успешно получены</description>
+                <example>
+                    <![CDATA[{
+                      "status": "success",
+                      "task": "user_get_personal_data_success",
+                      "message": "Data success",
+                      "data": {
+                        "id": 0,
+                        "name": null,
+                        "email": null,
+                        "picture": null,
+                        "biography": null
+                      }
+                    }]]>
+                </example>
+                <return>
+                    <name>id</name>
+                    <type>i</type>
+                    <description>Идентификатор пользователя</description>
+                </return>
+                <return>
+                    <name>name</name>
+                    <type>s</type>
+                    <description>Имя пользователя</description>
+                </return>
+                <return>
+                    <name>email</name>
+                    <type>s</type>
+                    <description>Почта пользователя</description>
+                </return>
+                <return>
+                    <name>picture</name>
+                    <type>s</type>
+                    <description>Фото профиля пользователя</description>
+                </return>
+                <return>
+                    <name>biography</name>
+                    <type>s</type>
+                    <description>Описание профиля пользователя</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
+                <example></example>
+            </response>
+        </endpoint>
+    </api>
 </documentation>
