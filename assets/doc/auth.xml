@@ -189,5 +189,123 @@
                 <example></example>
             </response>
         </endpoint>
+
+        <endpoint>
+            <path>/user/get/personal/edit</path>
+            <method>POST</method>
+            <description>Изменение информации о профиле</description>
+            <hint></hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>application/x-www-form-urlencoded</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>name</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Имя пользователя</description>
+                <example>VALUE</example>
+            </parameter>
+            <parameter>
+                <name>bio</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Биография пользователя</description>
+                <example>VALUE</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Информация успешно обновлена</description>
+                <example>
+                    <![CDATA[{
+                        "status": "success",
+                        "task": "user_get_personal_edit",
+                        "message": "Edit data success"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось обновить информацию</description>
+                <example>
+                    <![CDATA[{
+                        "status": "error",
+                        "task": "user_get_personal_edit",
+                        "message": "СООБЩЕНИЕ С ОШИБКОЙ",
+                        "data": {
+                            "code": 0
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Идентификатор ошибки</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
+                <example></example>
+            </response>
+        </endpoint>
+
+        <endpoint>
+            <path>/user/get/personal/delete</path>
+            <method>DELETE</method>
+            <description>Удаление всей информации о профиле</description>
+            <hint></hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>application/x-www-form-urlencoded</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <response>
+                <status>200</status>
+                <description>Профиль успешно удален</description>
+                <example>
+                    <![CDATA[{
+                        "status": "success",
+                        "task": "user_get_personal_delete",
+                        "message": "Delete success",
+                        "data": {
+                            "email": "ПОЧТА"
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>email</name>
+                    <type>s</type>
+                    <description>Почта профиля, который был удален</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось удалить профиль</description>
+                <example>
+                    <![CDATA[{
+                        "status": "error",
+                        "task": "user_get_personal_delete",
+                        "message": "СООБЩЕНИЕ С ОШИБКОЙ"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
+                <example></example>
+            </response>
+        </endpoint>
     </api>
 </documentation>
