@@ -54,7 +54,7 @@
                         "task": "auth_social_google_success",
                         "message": "Authorization success",
                         "data": {
-                            "token": "JWT ТОКЕН"
+                            "token": "ТОКЕН"
                         }
                     }]]>
                 </example>
@@ -62,6 +62,11 @@
                     <name>token</name>
                     <type>s</type>
                     <description>Токен аутентификации пользователя</description>
+                </return>
+                <return>
+                    <name>type</name>
+                    <type>i</type>
+                    <description>Тип аутентификации. 0 - Рег., 1 - Автор.</description>
                 </return>
             </response>
             <response>
