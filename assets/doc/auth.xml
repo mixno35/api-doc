@@ -54,7 +54,8 @@
                         "task": "auth_social_google_success",
                         "message": "Authorization success",
                         "data": {
-                            "token": "ТОКЕН"
+                            "token": "ТОКЕН",
+                            "type": 0
                         }
                     }]]>
                 </example>
