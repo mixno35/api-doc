@@ -277,6 +277,36 @@ function parseApiDocumentation(xmlString) {
                             container.appendChild(containerReturns);
                         }
 
+                        const dataReturns = response.querySelectorAll("data-return");
+                        if (dataReturns.length > 0) {
+                            const containerReturns = document.createElement("div");
+                            containerReturns.classList.add("parameters", "returns");
+
+                            dataReturns.forEach(r => {
+                                const infoR = {
+                                    name: parseApiValue(tr(String(r.querySelector("name").textContent ?? ""))),
+                                    description: parseApiValue(tr(String(r.querySelector("description").textContent ?? "")))
+                                };
+
+                                const containerReturn = document.createElement("div");
+
+                                const name = document.createElement("h5");
+                                name.classList.add("code");
+                                name.innerText = infoR.name;
+
+                                const description = document.createElement("span");
+                                description.classList.add("description", "code");
+                                description.innerText = "- " + infoR.description;
+
+                                containerReturn.appendChild(name);
+                                containerReturn.appendChild(description);
+
+                                containerReturns.appendChild(containerReturn);
+                            });
+
+                            container.appendChild(containerReturns);
+                        }
+
                         containerResponses.appendChild(container);
 
                         Prism.highlightElement(example);
@@ -296,6 +326,9 @@ function parseApiDocumentation(xmlString) {
 
                     const title = document.createElement("h4");
                     title.innerText = name;
+                    title.addEventListener("click", () => {
+                        container.classList.toggle("open");
+                    });
 
                     container.appendChild(title);
                     container.appendChild(container_content);

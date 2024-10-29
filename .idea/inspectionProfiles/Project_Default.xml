@@ -1,10 +1,15 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <Languages>
+        <language minSize="164" name="JavaScript" />
+      </Languages>
+    </inspection_tool>
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="21">
+          <list size="22">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -26,6 +31,7 @@
             <item index="18" class="java.lang.String" itemvalue="status" />
             <item index="19" class="java.lang.String" itemvalue="return" />
             <item index="20" class="java.lang.String" itemvalue="hint" />
+            <item index="21" class="java.lang.String" itemvalue="data-return" />
           </list>
         </value>
       </option>

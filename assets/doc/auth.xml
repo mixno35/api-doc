@@ -1,34 +1,100 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <documentation>
     <api>
+        <name>Общее</name>
+        <description>Общие ошибки, который могут произойти везде</description>
+        <url>{{baseUrl}}</url>
+
+        <endpoint>
+            <path>Общие ошибки</path>
+            <description>Общие ошибки</description>
+            <hint></hint>
+
+            <response>
+                <status>415</status>
+                <description>Некорректный Content-Type, обращайте внимание на "Заголовки > Content-Type"</description>
+                <example></example>
+            </response>
+            <response>
+                <status>405</status>
+                <description>Некорректный метод запроса</description>
+                <example></example>
+            </response>
+            <response>
+                <status>403</status>
+                <description>Запрос сформулирован некорректно (пример, {{baseUrl}}/v1/user - правильно, {{baseUrl}}/user - неправильно) / Рут недоступен ({{baseUrl}}/версия/рут)</description>
+                <example></example>
+            </response>
+            <response>
+                <status>401</status>
+                <description>Пользователь не авторизован / Токен пользователя истек / Токен пользователя некорректен</description>
+                <example></example>
+            </response>
+<!--            <response>-->
+<!--                <status>400</status>-->
+<!--                <description>Некорректно заполнены Заголовки</description>-->
+<!--                <example></example>-->
+<!--            </response>-->
+            <response>
+                <status>400</status>
+                <description>Ошибка соединения</description>
+                <example>
+                    <![CDATA[{
+                        "task": "database_connect_failed",
+                        "data": {
+                            "code": 0
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки errno MySQL</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Ошибка создания транзакции</description>
+                <example>
+                    <![CDATA[{
+                        "task": "database_transaction_failed",
+                        "data": {
+                            "code": 0
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки errno MySQL</description>
+                </return>
+            </response>
+        </endpoint>
+    </api>
+    <api>
         <name>Авторизация через соц. сети</name>
         <description>Авторизация пользователя в системе через социальные сети</description>
         <url>{{baseUrl}}</url>
 
         <endpoint>
-            <path>/auth/social/google</path>
+            <path>{{baseUrl}}/v1/auth/google</path>
             <method>POST</method>
             <description>Авторизация / Регистрация через Google</description>
             <hint>
                 Пример получения параметра "code" на стороне клиента: <![CDATA[<a target="_blank" href="https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru">https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru</a>]]>.
-                После получения "code" можно отправить запрос на авторизацию / регистрацию<![CDATA[<br>]]>
                 Scopes: email, profile
+
             </hint>
             <header>
                 <required>true</required>
                 <name>Content-Type</name>
                 <value>application/x-www-form-urlencoded</value>
             </header>
-            <header>
-                <required>false</required>
-                <name>X-App-Device-Type</name>
-                <value>Android</value>
-            </header>
             <parameter>
                 <name>type</name>
                 <type>s</type>
-                <required>true</required>
-                <description>Тип авторизации (mobile/web)</description>
+                <required>false</required>
+                <description>Тип авторизации (mobile/web, по умолчанию web)</description>
                 <example>VALUE</example>
             </parameter>
             <parameter>
@@ -50,45 +116,55 @@
                 <description>Регистрация / Авторизация прошла успешно</description>
                 <example>
                     <![CDATA[{
-                        "status": "success",
-                        "task": "auth_social_google_success",
-                        "message": "Authorization success",
+                        "task": "auth_success",
                         "data": {
                             "token": "ТОКЕН",
-                            "type": 0
+                            "status": 0
                         }
                     }]]>
                 </example>
                 <return>
                     <name>token</name>
                     <type>s</type>
-                    <description>Токен аутентификации пользователя</description>
+                    <description>Токен для аутентификации пользователя на сервере</description>
                 </return>
                 <return>
-                    <name>type</name>
+                    <name>status</name>
                     <type>i</type>
-                    <description>Тип аутентификации. 0 - Рег., 1 - Автор.</description>
+                    <description>Статус аутентификации</description>
+                </return>
+                <data-return>
+                    <name>status: 0</name>
+                    <description>Пользователь зарегистрировался</description>
+                </data-return>
+                <data-return>
+                    <name>status: 1</name>
+                    <description>Пользователь авторизовался</description>
+                </data-return>
+            </response>
+            <response>
+                <status>200</status>
+                <description>Ссылка для авторизации пользователя (только для Web, если параметр code не установлен)</description>
+                <example>
+                    <![CDATA[{
+                        "task": "auth_social_google_generate_link",
+                        "data": {
+                            "link": "ССЫЛКА"
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>link</name>
+                    <type>s</type>
+                    <description>Ссылка для авторизации</description>
                 </return>
             </response>
             <response>
                 <status>400</status>
-                <description>Код авторизации Google пуст/некорректен</description>
+                <description>Структура авторизации нарушена, может быть вызвано: отсутствующим/некорректным идентификатором Google клиента; некорректным code или id_token. Подробнее в error_log</description>
                 <example>
                     <![CDATA[{
-                        "status": "error",
-                        "task": "auth_social_google_invalid_code",
-                        "message": "ЗДЕСЬ БУДЕТ СООБЩЕНИЕ"
-                    }]]>
-                </example>
-            </response>
-            <response>
-                <status>400</status>
-                <description>ID Token авторизации Google пуст/некорректен</description>
-                <example>
-                    <![CDATA[{
-                        "status": "error",
-                        "task": "auth_social_google_invalid_token",
-                        "message": "ЗДЕСЬ БУДЕТ СООБЩЕНИЕ",
+                        "task": "auth_invalid_structure",
                         "data": {
                             "code": 0
                         }
@@ -99,17 +175,47 @@
                     <type>i</type>
                     <description>Код ошибки</description>
                 </return>
+                <data-return>
+                    <name>code: 1000</name>
+                    <description>Параметр type содержит недопустимый тип (доступно: web, mobile)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1001</name>
+                    <description>Google Client не определен (системная ошибка) (актуально только для Web)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1003</name>
+                    <description>Параметр code указан некорректно (актуально только для Web)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1004</name>
+                    <description>Google Client не определен (системная ошибка) (актуально только для Mobile)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1005</name>
+                    <description>Токен пользователя неактуален (устарел или содержит ошибку) (актуально только для Mobile)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1006</name>
+                    <description>Полученный токен не содержит необходимые ключи (актуально только для Mobile)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1007</name>
+                    <description>Полученный токен не из мира сего (токен подменен или сгенерирован кем-то другим) (актуально только для Mobile)</description>
+                </data-return>
+                <data-return>
+                    <name>code: *</name>
+                    <description>Иная ошибка от Google</description>
+                </data-return>
             </response>
             <response>
                 <status>400</status>
-                <description>Ошибка на стороне Google</description>
+                <description>ID Token авторизации Google пуст/некорректен</description>
                 <example>
                     <![CDATA[{
-                        "status": "error",
-                        "task": "auth_social_google_service_error",
-                        "message": "{}",
+                        "task": "user_invalid_data",
                         "data": {
-                            "code": 401
+                            "code": 0
                         }
                     }]]>
                 </example>
@@ -118,89 +224,132 @@
                     <type>i</type>
                     <description>Код ошибки</description>
                 </return>
+                <data-return>
+                    <name>code: 1001</name>
+                    <description>Почта пользователя указана некорректно</description>
+                </data-return>
+                <data-return>
+                    <name>code: 1002</name>
+                    <description>Идентификатор пользователя Google пуст</description>
+                </data-return>
             </response>
             <response>
                 <status>400</status>
-                <description>Некорректно заполнены Заголовки</description>
-                <example></example>
+                <description>Google аккаунт пользователя не подтвержден</description>
+                <example>
+                    <![CDATA[{
+                        "task": "user_email_not_verified",
+                        "data": {
+                            "email": "ПОЧТА"
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>email</name>
+                    <type>s</type>
+                    <description>Возвращаем почту пользователя с которой произошла ошибка</description>
+                </return>
             </response>
         </endpoint>
     </api>
     <api>
         <name>Работа с данными личного профиля</name>
-        <description>Просмотр / Изменение / Удаление</description>
+        <description>Просмотр / Изменение</description>
         <url>{{baseUrl}}</url>
 
         <endpoint>
-            <path>/user/get/personal/data</path>
+            <path>{{baseUrl}}/v1/user</path>
             <method>GET</method>
-            <description>Просмотр сведений о личном профиле</description>
-            <hint></hint>
+            <description>Просмотр сведений о профиле пользователя</description>
+            <hint>Заголовок "X-Authorization-Token" является опциональным и указывать его необязательно, если параметр "id" не указан, сведения о пользователе будет показаны на основе "X-Authorization-Token"</hint>
             <header>
-                <required>true</required>
-                <name>Content-Type</name>
-                <value>application/x-www-form-urlencoded</value>
-            </header>
-            <header>
-                <required>true</required>
+                <required>false</required>
                 <name>X-Authorization-Token</name>
                 <value>ТОКЕН</value>
             </header>
+            <parameter>
+                <name>id</name>
+                <type>string|int</type>
+                <required>false</required>
+                <description>Может быть как строкой так и числом, нужно для просмотра сведений о другом пользователе</description>
+                <example>VALUE</example>
+            </parameter>
             <response>
                 <status>200</status>
-                <description>Сведения успешно получены</description>
+                <description>Сведения успешно получены (каждое из полей "data" может отсутствовать, например, может не быть "username" и т.д.)</description>
                 <example>
                     <![CDATA[{
-                      "status": "success",
-                      "task": "user_get_personal_data_success",
-                      "message": "Data success",
+                      "task": "user_get_success",
                       "data": {
-                        "id": 0,
                         "name": null,
-                        "email": null,
-                        "picture": null,
-                        "biography": null
+                        "username": null,
+                        "bio": null,
+                        "picture_url": null
                       }
                     }]]>
                 </example>
                 <return>
-                    <name>id</name>
-                    <type>i</type>
-                    <description>Идентификатор пользователя</description>
-                </return>
-                <return>
                     <name>name</name>
-                    <type>s</type>
+                    <type>string|undefined</type>
                     <description>Имя пользователя</description>
                 </return>
                 <return>
-                    <name>email</name>
-                    <type>s</type>
-                    <description>Почта пользователя</description>
+                    <name>username</name>
+                    <type>string|undefined</type>
+                    <description>Короткое имя пользователя</description>
                 </return>
                 <return>
-                    <name>picture</name>
-                    <type>s</type>
-                    <description>Фото профиля пользователя</description>
+                    <name>bio</name>
+                    <type>string|undefined</type>
+                    <description>Информация пользователя о себе</description>
                 </return>
                 <return>
-                    <name>biography</name>
-                    <type>s</type>
-                    <description>Описание профиля пользователя</description>
+                    <name>picture_url</name>
+                    <type>string|undefined</type>
+                    <description>Ссылка на фото профиля</description>
                 </return>
             </response>
             <response>
                 <status>400</status>
-                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
-                <example></example>
+                <description>Идентификатор пользователя пуст (не указан id и/или X-Authorization-Token некорректен)</description>
+                <example>
+                    <![CDATA[{
+                      "task": "user_empty_id"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось получить сведения о пользователе</description>
+                <example>
+                    <![CDATA[{
+                      "task": "user_get_failed",
+                      "data": {
+                        "code": 0
+                      }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки</description>
+                </return>
+                <data-return>
+                    <name>code: 404</name>
+                    <description>Пользователь не найден</description>
+                </data-return>
+                <data-return>
+                    <name>code: *</name>
+                    <description>Иная ошибка errno MySQL</description>
+                </data-return>
             </response>
         </endpoint>
 
         <endpoint>
-            <path>/user/get/personal/edit</path>
-            <method>POST</method>
+            <path>{{baseUrl}}/v1/user</path>
+            <method>PUT</method>
             <description>Изменение информации о профиле</description>
-            <hint></hint>
+            <hint>Каждый из параметров является необязательным.</hint>
             <header>
                 <required>true</required>
                 <name>Content-Type</name>
@@ -215,14 +364,21 @@
                 <name>name</name>
                 <type>s</type>
                 <required>false</required>
-                <description>Имя пользователя</description>
+                <description>Имя пользователя (до 32 символов; запрещенные символы: <![CDATA["<", ">", "&", """, "'", "\", "/"]]>; запрещенные символы удаляются и идут в зачет к максимальной длине)</description>
+                <example>VALUE</example>
+            </parameter>
+            <parameter>
+                <name>username</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Короткое имя пользователя (может быть пустым; шаблон: [a-zA-Z0-9_]{3,32})</description>
                 <example>VALUE</example>
             </parameter>
             <parameter>
                 <name>bio</name>
                 <type>s</type>
                 <required>false</required>
-                <description>Биография пользователя</description>
+                <description>Биография пользователя (до 140 символов)</description>
                 <example>VALUE</example>
             </parameter>
             <response>
@@ -230,9 +386,16 @@
                 <description>Информация успешно обновлена</description>
                 <example>
                     <![CDATA[{
-                        "status": "success",
-                        "task": "user_get_personal_edit",
-                        "message": "Edit data success"
+                        "task": "update_success"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>username указан некорректно (username может быть пустым, в противном случае он должен соответствовать шаблону). Шаблон для username смотрите в "Параметры"</description>
+                <example>
+                    <![CDATA[{
+                      "task": "id_name_incorrect"
                     }]]>
                 </example>
             </response>
@@ -241,9 +404,7 @@
                 <description>Не удалось обновить информацию</description>
                 <example>
                     <![CDATA[{
-                        "status": "error",
-                        "task": "user_get_personal_edit",
-                        "message": "СООБЩЕНИЕ С ОШИБКОЙ",
+                        "task": "update_failed",
                         "data": {
                             "code": 0
                         }
@@ -252,65 +413,16 @@
                 <return>
                     <name>code</name>
                     <type>i</type>
-                    <description>Идентификатор ошибки</description>
+                    <description>Код ошибки</description>
                 </return>
-            </response>
-            <response>
-                <status>400</status>
-                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
-                <example></example>
-            </response>
-        </endpoint>
-
-        <endpoint>
-            <path>/user/get/personal/delete</path>
-            <method>DELETE</method>
-            <description>Удаление всей информации о профиле</description>
-            <hint></hint>
-            <header>
-                <required>true</required>
-                <name>Content-Type</name>
-                <value>application/x-www-form-urlencoded</value>
-            </header>
-            <header>
-                <required>true</required>
-                <name>X-Authorization-Token</name>
-                <value>ТОКЕН</value>
-            </header>
-            <response>
-                <status>200</status>
-                <description>Профиль успешно удален</description>
-                <example>
-                    <![CDATA[{
-                        "status": "success",
-                        "task": "user_get_personal_delete",
-                        "message": "Delete success",
-                        "data": {
-                            "email": "ПОЧТА"
-                        }
-                    }]]>
-                </example>
-                <return>
-                    <name>email</name>
-                    <type>s</type>
-                    <description>Почта профиля, который был удален</description>
-                </return>
-            </response>
-            <response>
-                <status>400</status>
-                <description>Не удалось удалить профиль</description>
-                <example>
-                    <![CDATA[{
-                        "status": "error",
-                        "task": "user_get_personal_delete",
-                        "message": "СООБЩЕНИЕ С ОШИБКОЙ"
-                    }]]>
-                </example>
-            </response>
-            <response>
-                <status>400</status>
-                <description>Некорректно заполнены Заголовки / Недействительный токен</description>
-                <example></example>
+                <data-return>
+                    <name>code: *601</name>
+                    <description>Неизвестный параметр для обновления или некорректное значение</description>
+                </data-return>
+                <data-return>
+                    <name>code: *</name>
+                    <description>Иная ошибка errno MySQL</description>
+                </data-return>
             </response>
         </endpoint>
     </api>

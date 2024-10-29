@@ -1,5 +1,5 @@
 const base = {
-    baseUrl: "https://www.floow.me"
+    baseUrl: "https://api.floow.me"
 };
 
 const timeStampInMs = Date.now();
