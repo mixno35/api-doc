@@ -425,5 +425,107 @@
                 </data-return>
             </response>
         </endpoint>
+
+        <endpoint>
+            <path>{{baseUrl}}/v1/user/avatar</path>
+            <method>POST</method>
+            <description>Загрузка нового аватара профиля</description>
+            <hint>Принимает только один файл. Разрешенные форматы: *.jpeg, *.jpg, *.png. Размер изображения не должен превышать 2000000 bytes (~2 МБ)</hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>multipart/form-data</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>file</name>
+                <type>file</type>
+                <required>true</required>
+                <description>Имя переменной может быть любым, например, file, avatar, image, param1234 и т.д.</description>
+                <example>ФАЙЛ</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Информация успешно обновлена</description>
+                <example>
+                    <![CDATA[{
+                        "task": "update_success"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось загрузить/обновить аватар</description>
+                <example>
+                    <![CDATA[{
+                        "task": "upload_avatar_failed",
+                        "data": {
+                            "code": 0
+                        }
+                    }]]>
+                </example>
+                <return>
+                    <name>code</name>
+                    <type>i</type>
+                    <description>Код ошибки</description>
+                </return>
+                <data-return>
+                    <name>code: 8000</name>
+                    <description>Изображение содержит ошибки / Превышен лимит размера изображения</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8001</name>
+                    <description>Временный файл не указан</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8003/8004</name>
+                    <description>Неподдерживаемый формат для изображения (неподдерживаемый MimeType)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8005</name>
+                    <description>Не удалось получить оригинальное разрешение изображения</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8006</name>
+                    <description>Не удалось изменить разрешение для изображения</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8007</name>
+                    <description>Не удалось изменить качество изображения</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8008</name>
+                    <description>Не удалось получить измененное изображение</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8009</name>
+                    <description>Системная ошибка</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8010</name>
+                    <description>Бакет для хранения не найден (не используется)</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8011</name>
+                    <description>Не удалось создать новый временный файл</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8012</name>
+                    <description>Не удалось получить ссылку на изображение</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8013</name>
+                    <description>Ссылка недоступна для просмотра</description>
+                </data-return>
+                <data-return>
+                    <name>code: *</name>
+                    <description>Иная ошибка errno MySQL</description>
+                </data-return>
+            </response>
+        </endpoint>
     </api>
 </documentation>
