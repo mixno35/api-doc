@@ -507,7 +507,7 @@
                 </data-return>
                 <data-return>
                     <name>code: 8010</name>
-                    <description>Бакет для хранения не найден (не используется)</description>
+                    <description>Бакет для хранения не найден</description>
                 </data-return>
                 <data-return>
                     <name>code: 8011</name>
@@ -520,6 +520,10 @@
                 <data-return>
                     <name>code: 8013</name>
                     <description>Ссылка недоступна для просмотра</description>
+                </data-return>
+                <data-return>
+                    <name>code: 8020</name>
+                    <description>Ни одного бакета не найдено</description>
                 </data-return>
                 <data-return>
                     <name>code: *</name>
