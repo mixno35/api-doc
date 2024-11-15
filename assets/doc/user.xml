@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<documentation>
+    <api>
+        <name>Работа с данными личного профиля</name>
+        <description>Просмотр / Изменение</description>
+        <url>{{baseUrl}}</url>
+
+        <endpoint>
+            <path>{{baseUrl}}/v1/user</path>
+            <method>GET</method>
+            <description>Просмотр сведений о профиле пользователя</description>
+            <hint>Заголовок "X-Authorization-Token" является опциональным и указывать его необязательно, если параметр "id" не указан, сведения о пользователе будет показаны на основе "X-Authorization-Token"</hint>
+            <header>
+                <required>false</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>id</name>
+                <type>string|int</type>
+                <required>false</required>
+                <description>Может быть как строкой так и числом, нужно для просмотра сведений о другом пользователе</description>
+                <example>VALUE</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Сведения успешно получены (каждое из полей "data" может отсутствовать, например, может не быть "username" и т.д.)</description>
+                <example>
+                    <![CDATA[{
+                      "task": "user_get_success",
+                      "data": {
+                        "name": null,
+                        "username": null,
+                        "bio": null,
+                        "picture_url": null,
+                        "picture_background_url": null
+                      }
+                    }]]>
+                </example>
+                <return>
+                    <name>name</name>
+                    <type>string|undefined</type>
+                    <description>Имя пользователя</description>
+                </return>
+                <return>
+                    <name>username</name>
+                    <type>string|undefined</type>
+                    <description>Короткое имя пользователя</description>
+                </return>
+                <return>
+                    <name>bio</name>
+                    <type>string|undefined</type>
+                    <description>Информация пользователя о себе</description>
+                </return>
+                <return>
+                    <name>picture_url</name>
+                    <type>string|undefined</type>
+                    <description>Ссылка на фото профиля</description>
+                </return>
+                <return>
+                    <name>picture_background_url</name>
+                    <type>string|undefined</type>
+                    <description>Ссылка на фон профиля</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Идентификатор пользователя пуст (не указан id и/или X-Authorization-Token некорректен)</description>
+                <example>
+                    <![CDATA[{
+                      "task": "user_empty_id"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось получить сведения о пользователе / Пользователь не найден</description>
+                <example>
+                    <![CDATA[{
+                      "task": "user_get_failed"
+                    }]]>
+                </example>
+            </response>
+        </endpoint>
+
+        <endpoint>
+            <path>{{baseUrl}}/v1/user</path>
+            <method>PUT</method>
+            <description>Изменение информации о профиле</description>
+            <hint>Каждый из параметров является необязательным.</hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>application/x-www-form-urlencoded</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>name</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Имя пользователя (может быть пустым; до 32 символов; запрещенные символы: <![CDATA["<", ">", "&", """, "'", "\", "/"]]>; запрещенные символы удаляются и идут в зачет к максимальной длине)</description>
+                <example>VALUE</example>
+            </parameter>
+            <parameter>
+                <name>username</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Короткое имя пользователя (может быть пустым; шаблон: [a-zA-Z0-9_]{3,32})</description>
+                <example>VALUE</example>
+            </parameter>
+            <parameter>
+                <name>bio</name>
+                <type>s</type>
+                <required>false</required>
+                <description>Биография пользователя (может быть пустым; до 140 символов)</description>
+                <example>VALUE</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Информация успешно обновлена</description>
+                <example>
+                    <![CDATA[{
+                        "task": "update_success"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>username указан некорректно (username может быть пустым, в противном случае он должен соответствовать шаблону). Шаблон для username смотрите в "Параметры"</description>
+                <example>
+                    <![CDATA[{
+                      "task": "id_name_incorrect"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось обновить информацию</description>
+                <example>
+                    <![CDATA[{
+                        "task": "update_failed"
+                    }]]>
+                </example>
+            </response>
+        </endpoint>
+
+        <endpoint>
+            <path>{{baseUrl}}/v1/user/avatar</path>
+            <method>POST</method>
+            <description>Загрузка нового аватара профиля</description>
+            <hint>Принимает только один файл. Разрешенные форматы: *.jpeg, *.jpg, *.png. Размер изображения не должен превышать 2000000 bytes (~2 МБ)</hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>multipart/form-data</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>file</name>
+                <type>file</type>
+                <required>true</required>
+                <description>Имя переменной может быть любым, например, file, avatar, image, param1234 и т.д.</description>
+                <example>ФАЙЛ</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Аватара успешно обновлен</description>
+                <example>
+                    <![CDATA[{
+                        "task": "update_success"
+                    }]]>
+                </example>
+            </response>
+            <response>
+                <status>500</status>
+                <description>Не удалось загрузить/обработать/сохранить аватар</description>
+                <example>
+                    <![CDATA[{
+                        "task": "update_failed"
+                    }]]>
+                </example>
+            </response>
+        </endpoint>
+    </api>
+</documentation>
