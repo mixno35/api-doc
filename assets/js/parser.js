@@ -45,6 +45,7 @@ function parseFormatJSON(jsonString) {
 
 function parseApiDocumentation(xmlString) {
     const containerMain = document.querySelector("section#section-for-documentation");
+    const navigationMain = document.querySelector("nav#navigation-for-documentation");
 
     if (!containerMain) {
         console.error("Section container not exist!");
@@ -68,8 +69,11 @@ function parseApiDocumentation(xmlString) {
             url: parseApiValue(tr(String(api.querySelector("url").textContent ?? "")))
         };
 
+        const itemUniqueID = "container-" + window.crypto.randomUUID();
+
         const container = document.createElement("div");
         container.classList.add("documentation");
+        container.id = itemUniqueID;
 
         const headerApi = document.createElement("article");
         headerApi.classList.add("header");
@@ -90,6 +94,31 @@ function parseApiDocumentation(xmlString) {
         if (endpoints.length > 0) {
             const containerEndpoints = document.createElement("div");
             containerEndpoints.classList.add("endpoints");
+
+            if (navigationMain) {
+                const navMain = document.createElement("div");
+
+                const headerNav = document.createElement("header");
+                headerNav.addEventListener("click", () => {
+                    container.scrollIntoView({
+                        block: "start",
+                        behavior: "smooth"
+                    });
+                });
+
+                const headerNavTitle = document.createElement("h5");
+                headerNavTitle.innerText = infoApi.name;
+
+                const headerMtrlIcon = document.createElement("i");
+                headerMtrlIcon.classList.add("bi", "bi-caret-right-fill");
+
+                headerNav.appendChild(headerNavTitle);
+                headerNav.appendChild(headerMtrlIcon);
+
+                navMain.appendChild(headerNav);
+
+                navigationMain.appendChild(navMain);
+            }
 
             endpoints.forEach(endpoint => {
                 const infoEndpoint = {

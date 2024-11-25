@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <documentation>
     <api>
-        <name>Работа с данными личного профиля</name>
+        <name>Пользовательские данные</name>
         <description>Просмотр / Изменение</description>
         <url>{{baseUrl}}</url>
 

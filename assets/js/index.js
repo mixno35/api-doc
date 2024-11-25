@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const docs = [
         "assets/doc/main.xml",
         "assets/doc/auth.xml",
-        "assets/doc/user.xml"
+        "assets/doc/user.xml",
+        "assets/doc/chat.xml"
     ];
 
     const timeStampInMs = Date.now();

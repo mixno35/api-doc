@@ -20,6 +20,8 @@
     --radius-03: 12px;
     --radius-04: 18px;
     --radius-05: 24px;
+
+    --size-header: 64px;
 }
 
 * {
@@ -48,7 +50,9 @@ body {
 
 header {
     width: calc(100% - calc(var(--padding-04) * 2));
-    height: 64px;
+    height: var(--size-header);
+    min-height: var(--size-header);
+    max-height: var(--size-header);
 
     display: flex;
     flex-direction: row;
@@ -412,4 +416,45 @@ div.responses > div.container > pre > code {
 }
 div.responses > div.container > pre > code > span {
     font-family: monospace;
+}
+
+nav#navigation-for-documentation {
+    width: 100%;
+    max-width: 280px;
+    height: 100%;
+
+    border-right: 1px solid var(--color-border);
+}
+nav#navigation-for-documentation > div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+
+    position: sticky;
+    top: var(--size-header);
+}
+nav#navigation-for-documentation > div > header {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    z-index: unset;
+}
+nav#navigation-for-documentation > div > header:hover {
+    background-color: var(--color-body-gray);
+}
+nav#navigation-for-documentation > div > header > h5 {
+    font-weight: 500;
+    font-size: 14px;
+
+    line-height: 95%;
+
+    position: relative;
+    top: -1px;
+}
+nav#navigation-for-documentation > div > header > i {
+    font-size: 12px;
 }

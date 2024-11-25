@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<documentation>
+    <api>
+        <name>Чаты / Личная переписка</name>
+        <description>Создание / Изменение / Удаление</description>
+        <url>{{baseUrl}}</url>
+
+        <endpoint>
+            <path>{{baseUrl}}/v1/chat</path>
+            <method>POST</method>
+            <description>Создание нового чата</description>
+            <hint></hint>
+            <header>
+                <required>true</required>
+                <name>Content-Type</name>
+                <value>application/x-www-form-urlencoded</value>
+            </header>
+            <header>
+                <required>true</required>
+                <name>X-Authorization-Token</name>
+                <value>ТОКЕН</value>
+            </header>
+            <parameter>
+                <name>recipient</name>
+                <type>string|int</type>
+                <required>true</required>
+                <description>Может быть как строкой так и числом - id или username пользователя, с которым нужно создать чат / начать переписку</description>
+                <example>VALUE</example>
+            </parameter>
+            <response>
+                <status>200</status>
+                <description>Чат успешно создан / начат</description>
+                <example>
+                    <![CDATA[{
+                      "task": "chat_create_success",
+                      "data": {
+                        "chat_id": 0
+                      }
+                    }]]>
+                </example>
+                <return>
+                    <name>chat_id</name>
+                    <type>int</type>
+                    <description>Идентификатор чата</description>
+                </return>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Не удалось создать чат</description>
+                <example>
+                    <![CDATA[{
+                      "task": "chat_create_failed"
+                    }]]>
+                </example>
+            </response>
+        </endpoint>
+    </api>
+</documentation>
