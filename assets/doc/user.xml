@@ -6,12 +6,19 @@
         <url>{{baseUrl}}</url>
 
         <endpoint>
-            <path>{{baseUrl}}/v1/user/{id|username}</path>
+            <path>{{baseUrl}}/v1/user</path>
             <method>GET</method>
             <description>Просмотр сведений о профиле пользователя</description>
-            <hint>{id|username} - допускается как id пользователя так и его username</hint>
+            <hint></hint>
+            <parameter>
+                <name>id</name>
+                <type>integer|string</type>
+                <required>false</required>
+                <description>Допускается как id пользователя так и его username</description>
+                <example>VALUE</example>
+            </parameter>
             <header>
-                <required>true</required>
+                <required>false</required>
                 <name>X-Authorization-Token</name>
                 <value>ТОКЕН</value>
             </header>
@@ -62,7 +69,7 @@
             </response>
             <response>
                 <status>400</status>
-                <description>{id|username} указан некорректно</description>
+                <description>id или username указан некорректно</description>
                 <example></example>
             </response>
             <response>
