@@ -6,28 +6,20 @@
         <url>{{baseUrl}}</url>
 
         <endpoint>
-            <path>{{baseUrl}}/v1/user</path>
+            <path>{{baseUrl}}/v1/user/{id|username}</path>
             <method>GET</method>
             <description>Просмотр сведений о профиле пользователя</description>
-            <hint>Заголовок "X-Authorization-Token" является опциональным и указывать его необязательно, если параметр "id" не указан, сведения о пользователе будет показаны на основе "X-Authorization-Token"</hint>
+            <hint>{id|username} - допускается как id пользователя так и его username</hint>
             <header>
-                <required>false</required>
+                <required>true</required>
                 <name>X-Authorization-Token</name>
                 <value>ТОКЕН</value>
             </header>
-            <parameter>
-                <name>id</name>
-                <type>string|int</type>
-                <required>false</required>
-                <description>Может быть как строкой так и числом, нужно для просмотра сведений о другом пользователе</description>
-                <example>VALUE</example>
-            </parameter>
             <response>
                 <status>200</status>
                 <description>Сведения успешно получены (каждое из полей "data" может отсутствовать, например, может не быть "username" и т.д.)</description>
                 <example>
                     <![CDATA[{
-                      "task": "user_get_success",
                       "data": {
                         "name": null,
                         "username": null,
@@ -64,22 +56,19 @@
                 </return>
             </response>
             <response>
-                <status>400</status>
-                <description>Идентификатор пользователя пуст (не указан id и/или X-Authorization-Token некорректен)</description>
-                <example>
-                    <![CDATA[{
-                      "task": "user_empty_id"
-                    }]]>
-                </example>
+                <status>404</status>
+                <description>Пользователь не найден</description>
+                <example></example>
             </response>
             <response>
                 <status>400</status>
-                <description>Не удалось получить сведения о пользователе / Пользователь не найден</description>
-                <example>
-                    <![CDATA[{
-                      "task": "user_get_failed"
-                    }]]>
-                </example>
+                <description>{id|username} указан некорректно</description>
+                <example></example>
+            </response>
+            <response>
+                <status>500</status>
+                <description>Не удалось получить сведения о пользователе</description>
+                <example></example>
             </response>
         </endpoint>
 
@@ -122,29 +111,17 @@
             <response>
                 <status>200</status>
                 <description>Информация успешно обновлена</description>
-                <example>
-                    <![CDATA[{
-                        "task": "update_success"
-                    }]]>
-                </example>
+                <example></example>
             </response>
             <response>
                 <status>400</status>
-                <description>username указан некорректно (username может быть пустым, в противном случае он должен соответствовать шаблону). Шаблон для username смотрите в "Параметры"</description>
-                <example>
-                    <![CDATA[{
-                      "task": "id_name_incorrect"
-                    }]]>
-                </example>
+                <description>Параметры указаны неверно (смотрите на шаблон в "Параметры")</description>
+                <example></example>
             </response>
             <response>
-                <status>400</status>
+                <status>500</status>
                 <description>Не удалось обновить информацию</description>
-                <example>
-                    <![CDATA[{
-                        "task": "update_failed"
-                    }]]>
-                </example>
+                <example></example>
             </response>
         </endpoint>
 
@@ -173,20 +150,17 @@
             <response>
                 <status>200</status>
                 <description>Аватара успешно обновлен</description>
-                <example>
-                    <![CDATA[{
-                        "task": "update_success"
-                    }]]>
-                </example>
+                <example></example>
+            </response>
+            <response>
+                <status>400</status>
+                <description>Выбранный файл некорректен</description>
+                <example></example>
             </response>
             <response>
                 <status>500</status>
                 <description>Не удалось загрузить/обработать/сохранить аватар</description>
-                <example>
-                    <![CDATA[{
-                        "task": "update_failed"
-                    }]]>
-                </example>
+                <example></example>
             </response>
         </endpoint>
     </api>

@@ -7,32 +7,12 @@
 
         <endpoint>
             <path>Общие ошибки</path>
-            <description>Общие ошибки</description>
+            <description>Распространенные ошибки, которые встречаются в большинстве запросов</description>
             <hint></hint>
 
             <response>
-                <status>500</status>
-                <description>Ошибка, возникшая на стороне сервера</description>
-                <example></example>
-            </response>
-            <response>
-                <status>415</status>
-                <description>Некорректный Content-Type, обращайте внимание на "Заголовки > Content-Type"</description>
-                <example></example>
-            </response>
-            <response>
-                <status>405</status>
-                <description>Некорректный метод запроса</description>
-                <example></example>
-            </response>
-            <response>
-                <status>403</status>
-                <description>Запрос сформулирован некорректно (пример, {{baseUrl}}/v1/user - правильно, {{baseUrl}}/user - неправильно) / Рут недоступен ({{baseUrl}}/версия/рут)</description>
-                <example></example>
-            </response>
-            <response>
                 <status>401</status>
-                <description>Пользователь не авторизован / Токен пользователя истек / Токен пользователя некорректен</description>
+                <description>Пользователь не авторизован / Токен пользователя недействителен</description>
                 <example></example>
             </response>
         </endpoint>

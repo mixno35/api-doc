@@ -12,7 +12,6 @@
             <hint>
                 Пример получения параметра "code" на стороне клиента: <![CDATA[<a target="_blank" href="https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru">https://developers.google.com/identity/sign-in/web/server-side-flow?hl=ru</a>]]>.
                 Scopes: email, profile
-
             </hint>
             <header>
                 <required>true</required>
@@ -22,8 +21,8 @@
             <parameter>
                 <name>type</name>
                 <type>s</type>
-                <required>false</required>
-                <description>Тип авторизации (mobile/web, по умолчанию web)</description>
+                <required>true</required>
+                <description>Тип авторизации (mobile/web)</description>
                 <example>VALUE</example>
             </parameter>
             <parameter>
@@ -45,7 +44,6 @@
                 <description>Регистрация / Авторизация прошла успешно</description>
                 <example>
                     <![CDATA[{
-                        "task": "auth_success",
                         "data": {
                             "token": "ТОКЕН",
                             "status": 0
@@ -72,39 +70,14 @@
                 </data-return>
             </response>
             <response>
-                <status>200</status>
-                <description>Ссылка для авторизации пользователя (только для Web, если параметр code не установлен)</description>
-                <example>
-                    <![CDATA[{
-                        "task": "auth_social_google_generate_link",
-                        "data": {
-                            "link": "ССЫЛКА"
-                        }
-                    }]]>
-                </example>
-                <return>
-                    <name>link</name>
-                    <type>s</type>
-                    <description>Ссылка для авторизации</description>
-                </return>
-            </response>
-            <response>
                 <status>400</status>
-                <description>Ошибка получения данных от Google / Полученные данные некорректны</description>
-                <example>
-                    <![CDATA[{
-                        "task": "auth_invalid"
-                    }]]>
-                </example>
+                <description>Ошибка получения данных от Google / Полученные данные от Google некорректны</description>
+                <example></example>
             </response>
             <response>
                 <status>500</status>
                 <description>Не удалось создать / авторизовать пользователя</description>
-                <example>
-                    <![CDATA[{
-                        "task": "auth_failed"
-                    }]]>
-                </example>
+                <example></example>
             </response>
         </endpoint>
     </api>
